@@ -310,6 +310,14 @@ handleDirectCommand dc = do
             handleRepeatedCommand (1,  dc)
             
 
+        "d" | st ^. editorMode == VisualMode -> do
+            let c = st ^. beforeEdit
+                d = st ^. currentEdit
+                e = st ^. afterEdit
+                newbuf = deleteSelection (c, d, e)
+            updateBuffer newbuf
+            updateHistory newbuf
+            changeMode NormalMode
 
         "dd" -> do
             let c = st ^. beforeEdit
