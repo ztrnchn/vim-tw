@@ -187,9 +187,9 @@ applySelectiontoBuffer (a,b) (c,d,e) = cb
             "0" -> 
                 selectLeftUntilNewline (c,d,e)
 
-            "G" -> selectUntilEOF (c,d,e)
+            "G" -> skipToLastLine (c, d, e)
             -- would need refinement of visual mode
-            --"gg" -> selectFromBegin (c,d,e) 
+            -- "gg" -> selectFromBegin (c,d,e) 
             _ -> (c,d,e) 
 
 
@@ -224,9 +224,9 @@ handleMovement (a,b) = do
             "0" -> 
                 moveLeftUntilNewline (c,d,e)
 
-            "G" -> moveUntilEOF (c,d,e)
+            "G" -> skipToLastLine (c,d,e)
 
-            "gg" -> moveUntilBegin (c,d,e)
+            "gg" -> skipToFirstLine (c,d,e)
             _ -> (c,d,e) 
     updateBuffer cb 
     clearCommandline
@@ -375,12 +375,4 @@ handleUndo = do
         h = st ^. history
         newbuf = getBufferFromTree newpos h
     updateBuffer newbuf
-    historyPos .= newpos
-
-            
- 
-  
-
-    
-
-        
+    historyPos .= newpos            

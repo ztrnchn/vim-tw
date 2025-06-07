@@ -7,7 +7,6 @@ import Algebra.HelperFunctions
 import Numeric.Natural
 
 
-
 moveRight :: CurrentBuffer -> CurrentBuffer
 moveRight (a,b,[]) = (a,b,[])
 moveRight (a,b,c) = unselectLeft $ selectRight (a,b,c)
@@ -24,7 +23,17 @@ moveLeftInline :: CurrentBuffer -> CurrentBuffer
 moveLeftInline ([],b,c) = ([],b,c)
 moveLeftInline (a,b,c) = unselectRight $ selectLeftInline (a,b,c)
 
+skipToFirstLine :: CurrentBuffer -> CurrentBuffer
+skipToFirstLine (before, current, after) =
+    let newCurrent = safehead before
+        newAfter = safetail before <> current <> after
+    in ([], newCurrent, newAfter)
 
+skipToLastLine :: CurrentBuffer -> CurrentBuffer
+skipToLastLine (before, current, after) =
+    let (remaining, lastLine) = (safeinit after, safelast after)
+        newBefore = before <> current <> remaining
+    in (newBefore, lastLine, [])
 
 moveRightUntilNewline :: CurrentBuffer -> CurrentBuffer
 moveRightUntilNewline (a,b,[]) = (a,b,[])
