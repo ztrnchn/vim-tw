@@ -1,7 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE RankNTypes #-}
-
 module UI.EditorWindow.EditorBuilder where
 
 import FileHandler.FileLoader 

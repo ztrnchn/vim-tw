@@ -1,5 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
-
 module UI.EditorWindow.EditorApp where
 
 import UI.EditorWindow.EditorBuilder

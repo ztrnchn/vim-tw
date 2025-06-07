@@ -1,6 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
-
-
 module Algebra.HelperFunctions where
 
 import Numeric.Natural

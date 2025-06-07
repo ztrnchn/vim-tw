@@ -1,5 +1,3 @@
-{-# LANGUAGE RankNTypes #-}
-
 module Domain.DomainTypes where
 
 import Lens.Micro
