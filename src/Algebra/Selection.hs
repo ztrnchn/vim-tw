@@ -24,6 +24,11 @@ unselectRight (a, b:bs, c) =
         else (a, safeinit (b:bs), safelast(b:bs) ++ c)
 unselectRight (a,b,c) = (a,b,c)
 
+-- Collapse the selection to the left bound of the selection
+unselectRightAll :: CurrentBuffer -> CurrentBuffer
+unselectRightAll (a, b:bs, c) = (a, [b], bs ++ c)
+unselectRightAll x = x
+
 selectLeft :: CurrentBuffer -> CurrentBuffer
 selectLeft (a:as, b, c) = (safeinit(a:as), safelast (a:as) ++ b, c)
 selectLeft (a,b,c) = (a,b,c)
