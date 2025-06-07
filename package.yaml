@@ -1,0 +1,58 @@
+name:                vim-tw
+version:             0.1.0.0
+license:             GPL-3.0-or-later
+author:              Fiona Pichler          
+
+extra-source-files:
+- README.md
+
+
+description:         modal text editor written in Haskell
+
+dependencies:
+  - base >= 4.7 && < 5
+  - brick
+  - microlens
+  - microlens-th
+  - microlens-mtl
+  - mtl
+  - vty
+  - directory
+  - hspec
+  - QuickCheck
+  - parsec
+  - containers
+  - text
+
+ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+
+library:
+  source-dirs: src
+
+executables:
+  vim-tw:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - base
+    - vim-tw
+
+tests:
+  vim-tw-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - vim-tw
+    - hspec
+    - QuickCheck

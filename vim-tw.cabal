@@ -1,0 +1,117 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           vim-tw
+version:        0.1.0.0
+description:    modal text editor written in Haskell
+author:         Fiona Pichler
+maintainer:     Fiona Pichler
+license:        GPL-3.0-or-later
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Algebra.HelperFunctions
+      Algebra.History
+      Algebra.InsertionDeletion
+      Algebra.Movement
+      Algebra.Selection
+      CommandlineHandler.CommandlineParser
+      CommandlineHandler.HandleCommands
+      Domain.DomainTypes
+      FileHandler.FileLoader
+      UI.EditorWindow.EditorApp
+      UI.EditorWindow.EditorBuilder
+      UI.EditorWindow.EditorEvents
+      UI.EditorWindow.Helptexts
+      UI.LandingWindow.LandingApp
+      UI.LandingWindow.LandingBuilder
+      UI.LandingWindow.LandingEvents
+      UI.MainUI
+      UI.Tutorial
+      UI.UIColors
+  other-modules:
+      Paths_vim_tw
+  autogen-modules:
+      Paths_vim_tw
+  hs-source-dirs:
+      src
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , brick
+    , containers
+    , directory
+    , hspec
+    , microlens
+    , microlens-mtl
+    , microlens-th
+    , mtl
+    , parsec
+    , text
+    , vty
+  default-language: Haskell2010
+
+executable vim-tw
+  main-is: Main.hs
+  other-modules:
+      Paths_vim_tw
+  autogen-modules:
+      Paths_vim_tw
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base
+    , brick
+    , containers
+    , directory
+    , hspec
+    , microlens
+    , microlens-mtl
+    , microlens-th
+    , mtl
+    , parsec
+    , text
+    , vim-tw
+    , vty
+  default-language: Haskell2010
+
+test-suite vim-tw-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      TestCommandLineParser
+      TestHelperFunctions
+      TestHistory
+      TestInsertionDeletion
+      TestSelectMove
+      Paths_vim_tw
+  autogen-modules:
+      Paths_vim_tw
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , brick
+    , containers
+    , directory
+    , hspec
+    , microlens
+    , microlens-mtl
+    , microlens-th
+    , mtl
+    , parsec
+    , text
+    , vim-tw
+    , vty
+  default-language: Haskell2010
