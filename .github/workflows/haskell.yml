@@ -33,8 +33,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-stack-
 
+
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y graphviz
-
+      
+    - name: Install graphmod
+      run: stack build --copy-compiler-tool graphmod
+      
     - name: Generate module graph
       run: stack exec graphmod | tred | dot -Tpng > Documentation/modules.png
