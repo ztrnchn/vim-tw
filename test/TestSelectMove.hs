@@ -26,6 +26,9 @@ testSelection = hspec $ do
         it "unselect to right" $ do
             unselectRight ("","a","") `shouldBe` ("","a","")
 
+        it "collapse selection to left" $ do
+            unselectRightAll ("ab", "cde", "f") `shouldBe` ("ab", "c", "def")
+
         it "select to left" $ do
             selectLeft ("a","","") `shouldBe` ("","a","")
         it "unselect to left" $ do

@@ -44,7 +44,7 @@ handleEnter  = do
         cl = unlines (E.getEditContents (st ^. commandEdit))
     case mode of 
         CommandMode -> do
-            let command = parseCommandline cl
+            let command = parseCommandline CommandMode cl
             case command of 
                 (VCommandlineCommand c) -> do
                     handleCommandlineCommand c
@@ -127,8 +127,8 @@ handleCommands = do
     let mode = st^.editorMode
         cl = unlines (E.getEditContents (st ^. commandEdit))
     case mode of
-        NormalMode -> handleNormalModeCommands (parseCommandline cl)
-        VisualMode -> handleVisualModeCommands (parseCommandline cl)
+        NormalMode -> handleNormalModeCommands (parseCommandline NormalMode cl)
+        VisualMode -> handleVisualModeCommands (parseCommandline VisualMode cl)
         InsertMode -> handleInsertModeCommands cl
         _ -> return ()
 
@@ -310,6 +310,14 @@ handleDirectCommand dc = do
             handleRepeatedCommand (1,  dc)
             
 
+        "d" | st ^. editorMode == VisualMode -> do
+            let c = st ^. beforeEdit
+                d = st ^. currentEdit
+                e = st ^. afterEdit
+                newbuf = deleteSelection (c, d, e)
+            updateBuffer newbuf
+            updateHistory newbuf
+            changeMode NormalMode
 
         "dd" -> do
             let c = st ^. beforeEdit
@@ -319,6 +327,15 @@ handleDirectCommand dc = do
                 newbuf = deleteSelection newselect
             updateBuffer newbuf
             updateHistory newbuf
+
+        "y" | st ^. editorMode == VisualMode -> do
+            editorClipboard .= st ^. currentEdit
+            let c = st ^. beforeEdit
+                d = st ^. currentEdit
+                e = st ^. afterEdit
+                newbuf = unselectRightAll (c, d, e)
+            updateBuffer newbuf
+            changeMode NormalMode
 
         "yy" -> do
             let c = st ^. beforeEdit
