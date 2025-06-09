@@ -72,6 +72,12 @@ appEvent (T.VtyEvent (V.EvKey (V.KChar 'r') [V.MCtrl])) =
     handleRedo
 appEvent (T.VtyEvent (V.EvKey V.KEnter [])) = do
     handleEnter 
+appEvent (T.VtyEvent (V.EvKey (V.KChar 'u') [V.MCtrl])) = do
+    -- TODO: Clear the command buffer
+    -- Example that currently does work:
+    -- 5 <C-u> j will go down 5 lines after <C-u> instead of just one.
+    handlePageUp
+    updateScrollText
 {- appEvent (T.VtyEvent (V.EvKey (V.KChar 'q') [])) =
     --liftIO $ LP.landingPage
 appEvent (T.VtyEvent (V.EvKey (V.KChar '\t') [])) =

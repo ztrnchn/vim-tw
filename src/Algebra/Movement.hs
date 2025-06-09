@@ -5,6 +5,7 @@ import Algebra.Selection
 import Algebra.HelperFunctions
 
 import Numeric.Natural
+import Data.Foldable
 
 
 moveRight :: CurrentBuffer -> CurrentBuffer
@@ -59,6 +60,10 @@ moveUp (a,b,c) =
                 then pos
                 else pos - 1
             newbuf = moveLeftUntilNewline $ moveLeft $ moveLeftUntilNewline (a,b,c)
+
+moveUpMany :: Int -> CurrentBuffer -> CurrentBuffer
+moveUpMany n | n > 0 = moveUp . moveUpMany (n - 1)
+moveUpMany _         = id
 
 moveDown :: CurrentBuffer -> CurrentBuffer
 moveDown (a,b,c) =
