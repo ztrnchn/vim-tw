@@ -89,7 +89,7 @@ getLastInlinePos (a,b,c) = getInlinePos ([],newb, [])
 
 selectUp :: CurrentBuffer -> CurrentBuffer
 selectUp (a,b,c) = 
-     repeatTimes count () (discardUnit unselectRight) newbuf
+     repeatTimes count unselectRight newbuf
         where 
             pos = getInlinePos (a,b,c)
             count = if pos < 1 
@@ -99,7 +99,7 @@ selectUp (a,b,c) =
 
 selectDown :: CurrentBuffer -> CurrentBuffer
 selectDown (a,b,c) =
-    repeatTimes count () (discardUnit selectRight) newbuf
+    repeatTimes count selectRight newbuf
         where 
             pos = getInlinePos (a,b,c)
             count = if pos < 1 
@@ -109,7 +109,7 @@ selectDown (a,b,c) =
 
 unselectDown :: CurrentBuffer -> CurrentBuffer
 unselectDown (a,b,c) = if  '\n' `elem` e
-    then repeatTimes count () (discardUnit selectRightInline) (n,e,w)
+    then repeatTimes count selectRightInline (n,e,w)
     else (n,e,w)
         where 
             pos = getLastInlinePos (a,b,c)

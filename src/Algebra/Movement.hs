@@ -52,7 +52,7 @@ moveLeftUntilNewline (a,b,c) =
 
 moveUp :: CurrentBuffer -> CurrentBuffer
 moveUp (a,b,c) = 
-     repeatTimes count () (discardUnit moveRightInline) newbuf
+     repeatTimes count moveRightInline newbuf
         where 
             pos = getInlinePos (a,b,c)
             count = if pos < 1 
@@ -62,7 +62,7 @@ moveUp (a,b,c) =
 
 moveDown :: CurrentBuffer -> CurrentBuffer
 moveDown (a,b,c) =
-    repeatTimes count () (discardUnit moveRightInline) newbuf
+    repeatTimes count moveRightInline newbuf
         where 
             pos = getInlinePos (a,b,c)
             count = if pos < 1 
