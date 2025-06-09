@@ -61,10 +61,6 @@ moveUp (a,b,c) =
                 else pos - 1
             newbuf = moveLeftUntilNewline $ moveLeft $ moveLeftUntilNewline (a,b,c)
 
-moveUpMany :: Int -> CurrentBuffer -> CurrentBuffer
-moveUpMany n | n > 0 = moveUp . moveUpMany (n - 1)
-moveUpMany _         = id
-
 moveDown :: CurrentBuffer -> CurrentBuffer
 moveDown (a,b,c) =
     repeatTimes count () (discardUnit moveRightInline) newbuf
@@ -74,10 +70,6 @@ moveDown (a,b,c) =
                 then pos
                 else pos - 1
             newbuf = moveRightUntilNewline (a,b,c)
-
-moveDownMany :: Int -> CurrentBuffer -> CurrentBuffer
-moveDownMany n | n > 0 = moveDown . moveDownMany (n - 1)
-moveDownMany _         = id
 
 moveUntilEOF :: CurrentBuffer -> CurrentBuffer
 moveUntilEOF (a,b,[]) = (a,b,[])

@@ -97,9 +97,9 @@ handlePageUp = do
     case mvp of
         Just vp -> do
             let (_, h) = vp ^. T.vpSize
-            let delta = h `div` 2
+            let delta = fromIntegral $ h `div` 2
             let buf = (st ^. beforeEdit, st ^. currentEdit, st ^. afterEdit)
-            updateBuffer (moveUpMany delta buf)
+            updateBuffer (repeatTimes delta () (const moveUp) buf)
         Nothing -> pure ()
 
 handlePageDown :: T.EventM Name St ()
@@ -109,9 +109,9 @@ handlePageDown = do
     case mvp of
         Just vp -> do
             let (_, h) = vp ^. T.vpSize
-            let delta = h `div` 2
+            let delta = fromIntegral $ h `div` 2
             let buf = (st ^. beforeEdit, st ^. currentEdit, st ^. afterEdit)
-            updateBuffer (moveDownMany delta buf)
+            updateBuffer (repeatTimes delta () (const moveDown) buf)
         Nothing -> pure ()
 
 handleNormalModeCommands ::  ValidInput -> T.EventM Name St ()
