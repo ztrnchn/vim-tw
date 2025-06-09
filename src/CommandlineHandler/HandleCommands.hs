@@ -99,7 +99,7 @@ handlePageUp = do
             let (_, h) = vp ^. T.vpSize
             let delta = fromIntegral $ h `div` 2
             let buf = (st ^. beforeEdit, st ^. currentEdit, st ^. afterEdit)
-            updateBuffer (repeatTimes delta () (const moveUp) buf)
+            updateBuffer (repeatTimes delta moveUp buf)
         Nothing -> pure ()
 
 handlePageDown :: T.EventM Name St ()
@@ -111,7 +111,7 @@ handlePageDown = do
             let (_, h) = vp ^. T.vpSize
             let delta = fromIntegral $ h `div` 2
             let buf = (st ^. beforeEdit, st ^. currentEdit, st ^. afterEdit)
-            updateBuffer (repeatTimes delta () (const moveDown) buf)
+            updateBuffer (repeatTimes delta moveDown buf)
         Nothing -> pure ()
 
 handleNormalModeCommands ::  ValidInput -> T.EventM Name St ()
@@ -188,22 +188,22 @@ applySelectiontoBuffer (a,b) (c,d,e) = cb
     where 
         cb = case b of 
             "h"-> 
-                repeatTimes a () (discardUnit unselectRight) (c,d,e)
+                repeatTimes a unselectRight (c,d,e)
                 
             "j"-> 
-                repeatTimes a () (discardUnit selectDown) (c,d,e)
+                repeatTimes a selectDown (c,d,e)
                 
             "k"-> 
-                repeatTimes a () (discardUnit unselectDown) (c,d,e)
+                repeatTimes a unselectDown (c,d,e)
                 
             "l"-> 
-                repeatTimes a () (discardUnit selectRight) (c,d,e)
+                repeatTimes a selectRight (c,d,e)
             
             "b"-> 
-                repeatTimes a () (discardUnit selectBeginWord) (c,d,e)
+                repeatTimes a selectBeginWord (c,d,e)
                 
             "e"-> 
-                repeatTimes a () (discardUnit selectEndWord) (c,d,e)
+                repeatTimes a selectEndWord (c,d,e)
                 
             "$" -> 
                 selectRightUntilNewline (c,d,e)
@@ -225,22 +225,22 @@ handleMovement (a,b) = do
         e = st ^. afterEdit
         cb = case b of 
             "h"-> 
-                repeatTimes a () (discardUnit moveLeft) (c,d,e)
+                repeatTimes a moveLeft (c,d,e)
                 
             "j"-> 
-                repeatTimes a () (discardUnit moveDown) (c,d,e)
+                repeatTimes a moveDown (c,d,e)
                 
             "k"-> 
-                repeatTimes a () (discardUnit moveUp) (c,d,e)
+                repeatTimes a moveUp (c,d,e)
                 
             "l"-> 
-                repeatTimes a () (discardUnit moveRight) (c,d,e)
+                repeatTimes a moveRight (c,d,e)
 
             "b"-> 
-                repeatTimes a () (discardUnit moveBeginWord) (c,d,e)
+                repeatTimes a moveBeginWord (c,d,e)
                 
             "e"-> 
-                repeatTimes a () (discardUnit moveEndWord) (c,d,e)
+                repeatTimes a moveEndWord (c,d,e)
                 
             "$" -> 
                 moveLeft (moveRightUntilNewline (c,d,e))
@@ -298,7 +298,7 @@ handleRepeatedCommand (n, dc) = do
             handleSelectionCommand (n, "d", (0,"l"))
             
         "p" -> do 
-            let cb = repeatTimes n str insertStringBeforeSelection (c,d,e)
+            let cb = repeatTimes n (insertStringBeforeSelection str) (c,d,e)
             updateBuffer cb
             updateHistory cb
         _ -> updateBuffer (c,d,e)

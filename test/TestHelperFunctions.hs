@@ -52,18 +52,18 @@ testrepeatTimes :: IO ()
 testrepeatTimes = hspec $ do
     describe "Unittests " $ do   
         it "repeatTimes 0 moveRight" $ do
-            repeatTimes 0 () (discardUnit moveRight) ("ab", "cd", "ef") `shouldBe` ("ab", "cd", "ef")
+            repeatTimes 0 moveRight ("ab", "cd", "ef") `shouldBe` ("ab", "cd", "ef")
 
         it "repeatTimes 1 selectRight" $ do
-            repeatTimes 1 () (discardUnit selectRight) ("ab", "cd", "ef")  `shouldBe` ("ab", "cde", "f")
+            repeatTimes 1 selectRight ("ab", "cd", "ef")  `shouldBe` ("ab", "cde", "f")
 
         it "repeatTimes 3 selectRight" $ do
-            repeatTimes 3 () (discardUnit selectRight) ("ab", "cd", "ef") `shouldBe`  ("ab", "cdef", "")
+            repeatTimes 3 selectRight ("ab", "cd", "ef") `shouldBe`  ("ab", "cdef", "")
 
     describe "Propertytests repeatTimes" $ do  
         it "repeatTimes 0 x f cb = cb --> input 0 -> id function" $
             property $ \cb ->
-                repeatTimes 0 () (discardUnit selectRight)cb  == cb
+                repeatTimes 0 selectRight cb  == cb
 
 
 testsplitbuffer :: IO ()

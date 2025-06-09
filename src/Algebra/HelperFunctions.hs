@@ -52,12 +52,9 @@ checkSelection (a,b,c) d = b==d
 getSelectionSize :: CurrentBuffer -> Natural
 getSelectionSize (a,b,c) = fromIntegral $ length b
 
-discardUnit::  (CurrentBuffer -> CurrentBuffer) -> a -> CurrentBuffer -> CurrentBuffer
-discardUnit f  a = f 
-
-repeatTimes :: Natural -> a -> (a -> CurrentBuffer -> CurrentBuffer) -> (CurrentBuffer -> CurrentBuffer)
-repeatTimes 0 _ bm = id
-repeatTimes y x bm = bm x . repeatTimes (y-1) x bm
+repeatTimes :: Natural -> (CurrentBuffer -> CurrentBuffer) -> (CurrentBuffer -> CurrentBuffer)
+repeatTimes 0 _ = id
+repeatTimes y f = f . repeatTimes (y-1) f
 
 splitbuffer :: CurrentBuffer -> ([Char],[Char],[Char],[Char],[Char])
 splitbuffer (a,b,c) = (ax,az,b,cx,cz)
