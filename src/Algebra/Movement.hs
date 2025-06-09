@@ -5,7 +5,6 @@ import Algebra.Selection
 import Algebra.HelperFunctions
 
 import Numeric.Natural
-import Data.Foldable
 
 
 moveRight :: CurrentBuffer -> CurrentBuffer
