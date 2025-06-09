@@ -102,6 +102,18 @@ handlePageUp = do
             updateBuffer (moveUpMany delta buf)
         Nothing -> pure ()
 
+handlePageDown :: T.EventM Name St ()
+handlePageDown = do
+    mvp <- M.lookupViewport LinesVP
+    st <- get
+    case mvp of
+        Just vp -> do
+            let (_, h) = vp ^. T.vpSize
+            let delta = h `div` 2
+            let buf = (st ^. beforeEdit, st ^. currentEdit, st ^. afterEdit)
+            updateBuffer (moveDownMany delta buf)
+        Nothing -> pure ()
+
 handleNormalModeCommands ::  ValidInput -> T.EventM Name St ()
 handleNormalModeCommands command = do 
     case command of

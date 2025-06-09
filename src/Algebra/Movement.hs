@@ -75,6 +75,10 @@ moveDown (a,b,c) =
                 else pos - 1
             newbuf = moveRightUntilNewline (a,b,c)
 
+moveDownMany :: Int -> CurrentBuffer -> CurrentBuffer
+moveDownMany n | n > 0 = moveDown . moveDownMany (n - 1)
+moveDownMany _         = id
+
 moveUntilEOF :: CurrentBuffer -> CurrentBuffer
 moveUntilEOF (a,b,[]) = (a,b,[])
 moveUntilEOF (a,b,c) = moveUntilEOF (moveRight (a,b,c))
